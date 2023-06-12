@@ -12,7 +12,7 @@ function menu () {
     while (opción != 0) {
         switch (opción) {
             case "1":
-                opcioncompra = prompt("\n 1) Almohadon 50 x 50   $4000 \n 2) Manta   $5000 \n 3) Alfombra   $6500");
+                opcioncompra = prompt("\n 1) Almohadon 50 x 50   $4000 \n 2) Manta   $5000 \n 3) Alfombra   $6500 \n 9) Volver al menu anterior");
                 if (opcioncompra == "1"){
                     descripción = "\n 1) Almohadon 50 x 50   $4000";
                     Carrito(descripción);
@@ -25,9 +25,15 @@ function menu () {
                         descripción = "\n 3) Alfombra   $6500";
                         Carrito(descripción);
                 }
+                else if (opcioncompra == "9"){
+                        break;
+                }
+                else if (opcioncompra != 1,2,3,9){
+                        alert ("La opción seleccionada no es correcta");
+                }
             break;
             case "2":
-                opcioncompra = prompt("\n 1) Luminaria colgante   $10.000 \n 2) Luminaria de pie   $15.000 \n 3) Luminaria fibras naturales chica  $8.000");
+                opcioncompra = prompt("\n 1) Luminaria colgante   $10.000 \n 2) Luminaria de pie   $15.000 \n 3) Luminaria fibras naturales chica  $8.000 \n 9) Volver al menu anterior");
                 if (opcioncompra == "1") {
                     descripción = "\n 1) Luminaria colgante   $10.000";
                     Carrito(descripción);
@@ -40,9 +46,15 @@ function menu () {
                         descripción = "\n 3) Luminaria fibras naturales chica  $8.000";
                         Carrito(descripción);
                 }
-            break;
+                else if (opcioncompra == "9"){
+                    break;
+                }
+                else if (opcioncompra != 1,2,3,9) {
+                    alert ("La opción seleccionada no es correcta");
+                }
+            break; 
             case "3":
-                opcioncompra = prompt("\n 1) Floreros   $2000 \n 2) Velas   $1500 \n 3) Macetas   $2000");
+                opcioncompra = prompt("\n 1) Floreros   $2000 \n 2) Velas   $1500 \n 3) Macetas   $2000 \n 9) Volver al menu anterior");
                 if (opcioncompra == "1") {
                     descripción = "\n 1) Floreros   $2000";
                     Carrito(descripción);
@@ -55,9 +67,15 @@ function menu () {
                     descripción = "\n 3) Macetas   $2000";
                     Carrito(descripción);
                 }
+                else if (opcioncompra == "9") {
+                        break;
+                }
+                else if (opcioncompra != 1,2,3,9) {
+                    alert ("La opción seleccionada no es correcta");
+                }
                 break;
             case "4":
-                opcioncompra = prompt("\n 1) Cuadros chicos  $2000 \n 2) Cuadros medianos   $3500 \n 3)Cuadros grandes   $4500");
+                opcioncompra = prompt("\n 1) Cuadros chicos  $2000 \n 2) Cuadros medianos   $3500 \n 3)Cuadros grandes   $4500 \n 9) Volver al menu anterior");
                 if (opcioncompra == "1") {
                     descripción = "\n 1) Cuadros chicos  $2000";
                     Carrito(descripción);
@@ -69,6 +87,12 @@ function menu () {
                 else if (opcioncompra == "3") {
                         descripción = "\n 3) Cuadros grandes   $4500";
                         Carrito(descripción);
+                }
+                else if (opcioncompra == "9"){
+                    break;
+                }
+                else if (opcioncompra != 1,2,3,9) {
+                    alert ("La opción seleccionada no es correcta");
                 }
                 break;
             default: 
