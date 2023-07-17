@@ -4,5 +4,8 @@ Al ajecutar el programa debe dar la bienvenida a la tienda, luego de eso, muestr
 
 Segunda Pre Entrega
 
-
 "Agregue, un menu administrativo valido por una contraseña que permite agregar, modificar,buscar, eliminar y listar los articulos en el arrarys productos. Además, se modificó el código para el menu principal para que se puedan realizarlas operaciones presentadas en la primera entrega, peron esta vez, utilizando el arreglo productos. Se utilizó filtrado por categorías en el menu pricipal."  
+
+Tercera Pre Entrega
+El código utilizado en la entrega anterior, está todo comentado,debido a que se utilizó promt y alert.
+Para esta entrega se agregó DOM, Local Storage, JSON, eventes y cards.

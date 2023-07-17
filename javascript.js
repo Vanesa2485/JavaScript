@@ -4,6 +4,195 @@ function  Bienvenida () {
     alert("Bienvenido a la Tienda");
 }
 
+class Producto{
+        
+    constructor(id,nombre,categoria,precio){
+    this.id = id;
+    this.nombre = nombre;
+    this.categoria = categoria;
+    this.precio = precio;
+    
+    }
+}
+class Tienda{
+    constructor(id,productos){
+        this.id = id;
+        this.productos = productos;
+}
+
+    editarProducto(idProducto){
+        let producto = this.productos.find(p => p.id === idProducto);
+        document.getElementById("IdProducto").hidden = true;
+        document.getElementById("nombreProducto").value = producto.nombre;
+        document.getElementById("categoriaProducto").value = producto.categoria;
+        document.getElementById("precioProducto").value = producto.precio;
+        const formEditarproducto = document.createElement("form");
+
+        const botonGrabar = document.createElement("input");
+        botonGrabar.type = "submit";
+        botonGrabar.classList = " mb-3 btn btn-primary";
+        botonGrabar.value = "GRABAR";
+
+        formEditarproducto.appendChild(botonGrabar);
+        document.getElementById("formulario").appendChild(formEditarproducto);
+        botonGrabar.addEventListener("click",() => {
+            producto.nombre = document.getElementById("nombreProducto").value;
+            producto.categoria = document.getElementById("categoriaProducto").value;
+            producto.precio = document.getElementById("precioProducto").value;
+            localStorage.setItem("tienda", JSON.stringify(this));
+        });
+}
+
+    listarProductos() {
+        const listaProductos = document.getElementById("listaProductos");
+        listaProductos.classList = "row row-cols-3"
+        listaProductos.innerHTML = "";
+        this.productos.map(producto => {
+            const columna = document.createElement("div");
+            columna.classList = "col";
+            const div = document.createElement("div");
+            div.classList = "card";
+            const titulo = document.createElement("h5");
+            titulo.classList = "card-header";
+            titulo.innerHTML = `Nombre: ${producto.nombre}  Categoria: ${producto.categoria} Precio: ${producto.precio}`;
+            const info = document.createElement("div");
+            info.classList = "card-body";
+            const id = document.createElement("p");
+            id.innerHTML = `ID: ${producto.id}`;
+
+            const botonEliminar = document.createElement("button");
+            botonEliminar.classList = "btn btn-danger";
+            botonEliminar.innerHTML = "Eliminar";
+
+            botonEliminar.addEventListener("click", () => {
+                this.eliminarProducto(producto.id);
+                this.listarProductos();
+            });
+
+            const botonEditar = document.createElement("button");
+            botonEditar.classList = "btn btn-success";
+            botonEditar.innerHTML = "Editar";
+
+            botonEditar.addEventListener("click", () => {
+                this.editarProducto(producto.id);
+                this.listarProductos();
+            });
+
+            div.appendChild(titulo);
+            info.appendChild(id);
+            info.appendChild(botonEliminar);
+            info.appendChild(botonEditar);
+            div.appendChild(info);
+
+            columna.appendChild(div);
+            listaProductos.appendChild(columna);
+        });
+    }
+
+    agregarProducto(producto){
+        if (producto.nombre === "" || producto.categoria === "" || producto.precio === "") {
+            error.innerHTML = "Debe completar todos los campos";
+            return;
+        }
+        const productoExistente = this.productos.find(e => e.id === producto.id);
+        if (productoExistente) {
+            error.innerHTML = "Ya hay un producto con ese ID";
+            return;
+        }
+        this.productos.push(producto);
+        localStorage.setItem("tienda", JSON.stringify(this));
+        document.getElementById("IdProducto").value = "";
+        document.getElementById("nombreProducto").value = "";
+        document.getElementById("categoriaProducto").value = "";
+        document.getElementById("precioProducto").value = "";
+    }
+
+    eliminarProducto(idProducto){
+        this.productos = this.productos.filter(producto => producto.id != idProducto);
+        localStorage.setItem("tienda", JSON.stringify(this));
+    }
+
+
+}
+
+class Formulario {
+    constructor (tipo) {
+        this.tipo = tipo;
+    }
+
+    construirFormulario() {
+    const formagregarProducto = document.createElement("form");
+    formagregarProducto.id = "formagregarProducto";
+
+    const inputId = document.createElement("input");
+    inputId.id = "IdProducto";
+    inputId.type = "number";
+    inputId.classList = "mb-3 form-control";
+    inputId.placeholder = "Id";
+
+    const inputNombre = document.createElement("input");
+    inputNombre.id = "nombreProducto";
+    inputNombre.type = "text";
+    inputNombre.classList = "mb-3 form-control";
+    inputNombre.placeholder = "Nombre";
+
+    const inputCategoria = document.createElement("input");
+    inputCategoria.id = "categoriaProducto";
+    inputCategoria.type = "text"; 
+    inputCategoria.classList = "mb-3 form-control";
+    inputCategoria.placeholder = "Categoría";
+
+    const inputPrecio = document.createElement("input");
+    inputPrecio.id = "precioProducto";
+    inputPrecio.type = "number"; 
+    inputPrecio.classList = "mb-3 form-control";
+    inputPrecio.placeholder = "Precio";
+
+    const botonAgregar = document.createElement("button");
+    botonAgregar.classList = "btn btn-primary";
+    botonAgregar.type = "submit"; 
+    botonAgregar.innerText = "Agregar"; 
+
+    formagregarProducto.appendChild(inputId);
+    formagregarProducto.appendChild(inputNombre);
+    formagregarProducto.appendChild(inputCategoria);
+    formagregarProducto.appendChild(inputPrecio);
+    formagregarProducto.appendChild(botonAgregar);
+
+    document.getElementById("formulario").appendChild (formagregarProducto);
+
+    formagregarProducto.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const IdProducto = document.getElementById("IdProducto").value;
+        const nombreProducto = document.getElementById("nombreProducto").value;
+        const categoriaProducto = document.getElementById("categoriaProducto").value;
+        const precioProducto = document.getElementById("precioProducto").value;
+        const producto = new Producto (IdProducto, nombreProducto, categoriaProducto, precioProducto);
+        tiendaNueva.agregarProducto(producto);
+        tiendaNueva.listarProductos();
+        });
+    }
+}
+
+let tiendaNueva;
+let error = document.getElementById("error");
+
+const iniciar = () => {
+    let TiendaGuardado = localStorage.getItem ("tienda");
+    if (TiendaGuardado){
+        TiendaGuardado = JSON.parse(TiendaGuardado);
+        tiendaNueva = new Tienda(TiendaGuardado.id, TiendaGuardado.productos);
+        tiendaNueva.listarProductos();
+    } else {
+        tiendaNueva = new Tienda ("Javascript",[]);
+        localStorage.setItem("tienda", JSON.stringify(tiendaNueva));
+        error.innerHTML = "La tienda se encuentra vacia";
+    }
+    const formulario = new Formulario ("Agregar");
+    formulario.construirFormulario();
+}
+
+/*
 function contraseña (password) {
     let clave = prompt ("Ingresar contraseña")
     if (clave == "1234"){
@@ -13,6 +202,7 @@ function contraseña (password) {
         password.password = false; 
         }
 }
+
 
 class producto{
         
@@ -31,7 +221,7 @@ function precargararreglo (productos,id) {
         productos.push(new producto(id.id,"Almohadon 50 x 50","Textil","4000"))
         productos.push(new producto((id.id=id.id+1),"Manta","Textil","5000"))
         productos.push(new producto((id.id=id.id+1),"Alfombra","Textil","6500"))
-        productos.push(new producto((id.id=id.id+1),"Luminaria Colgante","Iluminación","10.000"))
+        productos.push(new producto((id.id=id.id+1),"Luminaria colgante","Iluminación","10.000"))
         productos.push(new producto((id.id=id.id+1),"Luminaria de pie","Iluminación","15.000"))
         productos.push(new producto((id.id=id.id+1),"Luminaria fibras naturales chicas","Iluminación","8.000"))
         productos.push(new producto((id.id=id.id+1),"Floreros", "Decoración", "2000"))
@@ -319,9 +509,9 @@ function menu () {
 function Saludo () {
     alert ("Gracias por su visita");
 }
+*/
 
-
-Bienvenida ();
-
-menu ();
-Saludo ();
+//Bienvenida ();
+iniciar ();
+//menu ();
+//Saludo ();
